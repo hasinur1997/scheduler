@@ -59,7 +59,7 @@ class InviteController extends Controller
             'accept'    =>  make_url([
                             'team', 
                             active_team()->id, 
-                            'invite', Hash:: make($request->email),
+                            'invite', Hash::make(time()),
                             $request->email
                         ]),
             'decliend' => url('/team/decliend'),

@@ -9,6 +9,8 @@ class Project extends Model
 {
     protected $guarded = [];
 
+    protected $appends = ['total_tasks', 'completed_tasks', 'progress'];
+
     /**
      * Get project team
      *
@@ -67,5 +69,35 @@ class Project extends Model
     public function milestones()
     {
         return $this->hasMany(Milestone::class);
+    }
+
+    /**
+     * Get all subtask of a projects
+     *
+     * @return integer
+     */
+    public function getTotalTasksAttribute()
+    {
+        return $this->subTasks()->count();
+    }
+
+    /**
+     * Get total completed tasks numbers
+     *
+     * @return integer
+     */
+    public function getCompletedTasksAttribute()
+    {
+        return $this->subTasks()->where('completed', 1)->get()->count();
+    }
+
+    /**
+     * Get progress percent
+     *
+     * @return integer
+     */
+    public function getProgressAttribute()
+    {
+        return $this->total_tasks == 0 ? 0 : number_format(($this->completed_tasks / $this->total_tasks ) * 100);
     }
 }

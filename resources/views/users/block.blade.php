@@ -9,9 +9,18 @@
                 <h2 class="lead"><b>{{ $user->name }}</b></h2>
                 <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
                 <ul class="ml-4 mb-0 fa-ul text-muted">
-                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
-                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
-                <li class="small"><span class="fa-li"><i class="fas fa-envelope"></i></span> Email #: {{$user->email }}</li>
+                @if($user->profile['address1'])
+                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: {{ $user->profile['address1'] }}</li>
+                @endif
+
+                @if($user->profile['phone'])
+                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: {{ $user->profile['phone'] }}</li>
+                @endif
+                
+                @if($user->email)
+                    <li class="small"><span class="fa-li"><i class="fas fa-envelope"></i></span> Email #: {{$user->email }}</li>
+                @endif
+                
                 </ul>
             </div>
             <div class="col-5 text-center">

@@ -77,7 +77,7 @@ class TeamController extends Controller
         // Switch to the new workspace
         $this->switch($team);
 
-        return redirect('home');
+        return redirect()->route('home');
     }
 
     /**
@@ -113,7 +113,7 @@ class TeamController extends Controller
     {
         auth()->user()->switchTo($team);
 
-        return redirect()->back();
+        return redirect()->route('home');
     }
 
     /**

@@ -205,8 +205,11 @@ class User extends Authenticatable
      *
      * @return array
      */
-    public function completedTask()
+    public function completedTask($firt_date, $last_date)
     {
-        return $this->subTasks()->where(['team_id' => active_team()->id, 'completed' => 1])->get();
+        return $this->subTasks()
+            ->where(['team_id' => active_team()->id, 'completed' => 1])
+            ->whereBetween('completed_date', [$firt_date, $last_date])
+            ->get();
     }
 }

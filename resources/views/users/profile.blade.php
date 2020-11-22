@@ -73,11 +73,11 @@
 
                 @php 
                     $tabs = [
-                        'activity'   =>  'Activity',
-                        'timeline'  =>  'Timeline',
-                        'settings'  =>  'Settings',
+                        'tasks'     =>  'My Tasks',
                         'reports'   =>  'Reports',
-                        'tasks'     =>  'My Tasks'
+                        'settings'  =>  'Settings',
+                        
+                        
                     ]
                 @endphp
 

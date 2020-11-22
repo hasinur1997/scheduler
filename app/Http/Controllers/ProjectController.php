@@ -70,9 +70,10 @@ class ProjectController extends Controller
     public function show(Team $team, Project $project)
     {
         $tab =  request()->query('tab') ? request()->query('tab') : 'tasks';
+        $action = request()->query('action') ? request()->query('action') : '';
         $users = $team->users;
 
-        return view('projects.show', compact('project', 'users', 'tab'));
+        return view('projects.show', compact('project', 'users', 'tab', 'action'));
     }
 
     /**

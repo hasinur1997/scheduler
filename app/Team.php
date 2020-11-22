@@ -3,6 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use App\Project;
+use App\Milestone;
 
 class Team extends Model
 {
@@ -46,5 +49,25 @@ class Team extends Model
     public function roles()
     {
         return $this->hasMany(Role::class);
+    }
+
+    /**
+     * Get all task of a team
+     *
+     * @return collections
+     */
+    public function tasks()
+    {
+        return $this->hasManyThrough(Task::class, Project::class);
+    }
+
+    /**
+     * Get all milestone of a team
+     *
+     * @return collections
+     */
+    public function milestones()
+    {
+        return $this->hasManyThrough(Milestone::class, Project::class);
     }
 }

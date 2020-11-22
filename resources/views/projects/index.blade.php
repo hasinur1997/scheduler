@@ -26,7 +26,7 @@
     {{-- </div> --}}
     <div class="card-body p-0">
         @if($projects->count())
-            <table class="table table-striped projects">
+            <table class="table projects">
                 <thead>
                     <tr>
                         <th style="width: 1%">
@@ -74,11 +74,17 @@
                             </td>
                             <td class="project_progress">
                                 <div class="progress progress-sm">
-                                    <div class="progress-bar bg-green" role="progressbar" aria-volumenow="57" aria-volumemin="0" aria-volumemax="100" style="width: 57%">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-volumenow="57" aria-volumemin="0" aria-volumemax="100" style="width: {{$project->progress}}%">
+                                        
                                     </div>
                                 </div>
+                                
                                 <small>
-                                    57% Complete
+                                    @if($project->tasks()->count() != 0)
+                                        {{$project->progress}}% Complete
+                                    @else
+                                        No tasks available
+                                    @endif
                                 </small>
                             </td>
                             <td class="project-state">

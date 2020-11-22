@@ -9,7 +9,7 @@
                     </i></span>
                     <div class="info-box-content">
                     <span class="info-box-text">Task List</span>
-                    <span class="info-box-number">1,410</span>
+                    <span class="info-box-number">{{ $project->tasks()->count() }}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -21,7 +21,7 @@
 
                 <div class="info-box-content">
                 <span class="info-box-text">Tasks</span>
-                <span class="info-box-number">410</span>
+                <span class="info-box-number">{{ $project->subTasks()->count() }}</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -35,7 +35,7 @@
                     </span>
                     <div class="info-box-content">
                         <span class="info-box-text">Discussion</span>
-                        <span class="info-box-number">13,648</span>
+                        <span class="info-box-number">{{ $project->notices()->count() }}</span>
                     </div>
                 </div>
             </div>
@@ -46,215 +46,89 @@
                     </span>
                     <div class="info-box-content">
                         <span class="info-box-text">Milestones</span>
-                        <span class="info-box-number">93,139</span>
+                        <span class="info-box-number">{{ $project->milestones()->count() }}</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card card-primary card-outline">
             <div class="card-header">
-                        <h3 class="card-title">
-                        <i class="far fa-chart-bar"></i>
-                        Interactive Area Chart
-                        </h3>
-
-                        <div class="card-tools">
-                        Real time
-                        <div class="btn-group" id="realtime" data-toggle="btn-toggle">
-                            <button type="button" class="btn btn-default btn-sm active" data-toggle="on">On</button>
-                            <button type="button" class="btn btn-default btn-sm" data-toggle="off">Off</button>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div 
-                            id="interactive" 
-                            style="height: 300px; padding: 0px; position: relative;">
-                            <canvas 
-                                class="flot-base" 
-                                width="1119" 
-                                height="300" 
-                                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1119px; height: 300px;"
-                            >
-                            </canvas>
-                            <canvas 
-                                class="flot-overlay" 
-                                width="1119" 
-                                height="300" 
-                                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1119px; height: 300px;"
-                            >
-                            </canvas>
-                            <div 
-                                class="flot-svg" 
-                                style="position: absolute; top: 0px; left: 0px; height: 100%; width: 100%; pointer-events: none;"
-                            >
-                            <svg 
-                                style="width: 100%; height: 100%;"
-                            >
-                            <g 
-                            class="flot-x-axis flot-x1-axis xAxis x1Axis" 
-                                style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"
-                            >
-                                <text 
-                                    x="28.1171875" 
-                                    y="294.5" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: center;"
-                                >
-                                    0
-                                </text>
-                                <text 
-                                    x="133.32694128787878" 
-                                    y="294.5" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: center;"
-                                >
-                                    10
-                                </text>
-                                <text 
-                                    x="242.11482007575756" 
-                                    y="294.5" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: center;"
-                                >
-                                    20
-                                </text>
-                                <text 
-                                    x="350.9026988636364" 
-                                    y="294.5" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: center;"
-                                >
-                                    30
-                                </text>
-                                <text 
-                                    x="459.6905776515151" 
-                                    y="294.5" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: center;"
-                                >
-                                    40
-                                </text>
-                                <text 
-                                    x="568.478456439394" 
-                                    y="294.5" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: center;"
-                                >
-                                50
-                                </text>
-                                <text 
-                                x="677.2663352272727" 
-                                y="294.5" 
-                                class="flot-tick-label tickLabel" 
-                                style="position: absolute; text-align: center;"
-                                >
-                                60
-                                </text>
-                                <text 
-                                    x="786.0542140151515" 
-                                    y="294.5" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: center;"
-                                >
-                                    70
-                                </text>
-
-                                <text 
-                                    x="894.8420928030303" 
-                                    y="294.5" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: center;"
-                                >
-                                    80
-                                </text>
-                                <text 
-                                    x="1003.6299715909091" 
-                                    y="294.5" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: center;"
-                                >
-                                    90
-                                </text>
-                            </g>
-                            <g 
-                                class="flot-y-axis flot-y1-axis yAxis y1Axis" 
-                                style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"
-                            >
-                                <text 
-                                    x="8.15625" 
-                                    y="270.5" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: right;"
-                                >
-                                    0
-                                </text>
-                                <text 
-                                    x="1" 
-                                    y="13.5" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: right;"
-                                >
-                                    70
-                                </text>
-                                <text 
-                                    x="1" 
-                                    y="233.78571428571428" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: right;"
-                                >
-                                    10
-                                </text>
-                                <text 
-                                    x="1" 
-                                    y="197.07142857142856" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: right;"
-                                >
-                                    20
-                                </text>
-                                <text 
-                                    x="1" 
-                                    y="160.35714285714286" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: right;"
-                                >
-                                    30
-                                </text>
-                                <text 
-                                    x="1" 
-                                    y="123.64285714285714" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: right;"
-                                >
-                                    40
-                                </text>
-                                <text 
-                                    x="1" 
-                                    y="86.92857142857143" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: right;"
-                                >
-                                    50
-                                </text>
-                                <text 
-                                    x="1" 
-                                    y="50.214285714285715" 
-                                    class="flot-tick-label tickLabel" 
-                                    style="position: absolute; text-align: right;"
-                                >
-                                    60
-                                </text>
-                            </g>
-                        </svg>
-                    </div>
-                </div>
+                <h3 class="card-title">
+                <i class="far fa-chart-bar"></i>
+                    Assigned Users
+                </h3>
+            </div>
+            <div class="card-body">
+                @if($project->users()->count())
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($project->users as $user)
+                                <tr>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->profile['phone'] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
             </div>
         </div>
     </div>
     <!-- End Col -->
 
     <div class="col-md-3">
-        <users :team="{{ active_team() }}" :project="{{ $project }}"></user>
+        {{-- <users :team="{{ active_team() }}" :project="{{ $project }}"></user> --}}
+        <div class="card card-outline card-success">
+            <div class="card-header">
+                <h3 class="card-title">Users</h3>
+                <div class="card-tools">
+                    <button 
+                        type="button" 
+                        class="btn btn-tool" 
+                    >
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <form action="{{ url('/team/'. active_team()->id .'/projects/' . $project->id . '/users') }}" method="POST">
+                    @csrf
+                    <div class="form-group" data-select2-id="46">
+                        <select 
+                            class="select2 select2-hidden-accessible" 
+                            multiple="true" 
+                            data-placeholder="Select a State" 
+                            style="width: 100%;" 
+                            data-select2-id="7" 
+                            tabindex="-1" 
+                            aria-hidden="true"
+                            name="users[]"
+                        >   
+                            @foreach(active_team()->users as $user)
+                                <option  
+                                    data-select2-id="{{$user->id}}" 
+                                    value="{{$user->id}}"
+                                    {{$project->users->contains($user) ? 'selected' : ''}}
+                                >
+                                    {{ $user->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-info btn-sm" value="Update Users">
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>

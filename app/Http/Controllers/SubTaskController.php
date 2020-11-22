@@ -82,6 +82,31 @@ class SubTaskController extends Controller
         return $subtask->with('user')->first();
     }
 
+    /**
+     * Make the subtask as completed
+     *
+     * @param Task $task
+     * @param SubTask $subtask
+     * 
+     * @return object
+     */
+    public function completed(Task $task, SubTask $subtask)
+    {
+        $subtask->update([
+            'completed' => 1,
+        ]);
+
+        return $subtask;
+    }
+
+    /**
+     * Delete subtask
+     *
+     * @param Task $task
+     * @param SubTask $subtask
+     * 
+     * @return bool
+     */
     public function destroy(Task $task, SubTask $subtask)
     {
         return $subtask->delete();

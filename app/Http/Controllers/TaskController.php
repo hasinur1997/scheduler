@@ -7,6 +7,7 @@ use App\Task;
 use App\Team;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Database\Eloquent\Builder;
 
 class TaskController extends Controller
 {
@@ -18,7 +19,8 @@ class TaskController extends Controller
     public function index(Team $team, Project $project)
     {
 
-        return $project->tasks()->with('subTasks.user')->get();
+        return $project->tasks()
+            ->with('subTasks.user')->get();
     }
 
     /**
@@ -53,6 +55,7 @@ class TaskController extends Controller
         $task = $project->tasks()->create([
             'name'  => $request->name,
             'description'   =>  $request->description,
+            'milestone_id'  =>  $request->milestone,
             'created_by'    =>  auth()->user()->id
         ]);
 
@@ -104,6 +107,7 @@ class TaskController extends Controller
         return $task->update([
             'name'  => $request->name,
             'description'   =>  $request->description,
+            'milestone_id'  => $request->milestone,
             'created_by'    =>  auth()->user()->id
         ]);
     }

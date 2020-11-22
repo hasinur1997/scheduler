@@ -2111,6 +2111,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['task', 'team', 'project', 'users', 'subtasks'],
   data: function data() {
@@ -2125,9 +2149,11 @@ __webpack_require__.r(__webpack_exports__);
       selectUser: [],
       is_modal_open: false,
       subtask_id: '',
+      completed: 0,
       is_editing: false,
       showModal: false,
-      dismissModal: ''
+      dismissModal: '',
+      message: ''
     };
   },
   methods: {
@@ -2149,6 +2175,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.is_modal_open = false;
         _this.errors = [];
         _this.showModal = false;
+        _this.message = 'Sub task created successfully';
       })["catch"](function (error) {
         _this.errors = error.response.data.errors;
       });
@@ -2182,6 +2209,7 @@ __webpack_require__.r(__webpack_exports__);
 
           return subTask;
         });
+        _this2.message = 'Sub task updated successfully';
       })["catch"](function (error) {
         _this2.errors = error.response.data.errors;
       });
@@ -2198,6 +2226,8 @@ __webpack_require__.r(__webpack_exports__);
       this.selectUser = subTask.user_id;
       this.is_modal_open = true;
       this.is_editing = true;
+      this.message = '';
+      this.completed = task.completed;
     },
     deleteSubTask: function deleteSubTask(subTask) {
       var _this3 = this;
@@ -2223,6 +2253,15 @@ __webpack_require__.r(__webpack_exports__);
       this.subtask_id = '';
       this.is_modal_open = true;
       this.showModal = true;
+      this.message = '';
+    },
+    makeCompleted: function makeCompleted(task) {
+      console.log(task);
+      axios.get("/team/".concat(this.task.id, "/subtasks/").concat(this.subtask_id, "/completed")).then(function (result) {
+        console.log(result);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   created: function created() {// this.getSubTask()
@@ -2501,8 +2540,59 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['team_id', 'project_id', 'users'],
+  props: ['team_id', 'project_id', 'users', 'milestones'],
   data: function data() {
     return {
       createTask: false,
@@ -2515,7 +2605,8 @@ __webpack_require__.r(__webpack_exports__);
       success: false,
       message: '',
       taskOpen: false,
-      taskEditing: false
+      taskEditing: false,
+      milestone: ''
     };
   },
   methods: {
@@ -2525,7 +2616,8 @@ __webpack_require__.r(__webpack_exports__);
       var self = this;
       var task = {
         name: this.name,
-        description: this.description
+        description: this.description,
+        milestone: this.milestone
       };
       axios.post("/team/".concat(self.team_id, "/projects/").concat(self.project_id, "/tasks"), task).then(function (result) {
         self.tasks.push(result.data);
@@ -2543,7 +2635,8 @@ __webpack_require__.r(__webpack_exports__);
 
       var task = {
         name: this.name,
-        description: this.description
+        description: this.description,
+        milestone: this.milestone
       };
       axios.put("/team/".concat(this.team_id, "/projects/").concat(this.project_id, "/tasks/").concat(this.task_id), task).then(function (result) {
         // this.tasks.push(task)
@@ -2555,6 +2648,7 @@ __webpack_require__.r(__webpack_exports__);
           if (task.id == _this2.task_id) {
             task.name = _this2.name;
             task.description = _this2.description;
+            task.milestone_id = _this2.milestone;
           }
 
           return task;
@@ -2595,6 +2689,7 @@ __webpack_require__.r(__webpack_exports__);
       this.name = task.name;
       this.description = task.description;
       this.createTask = false;
+      this.milestone = task.milestone_id;
     },
     deleteTask: function deleteTask(task) {
       var _this4 = this;
@@ -38879,7 +38974,9 @@ var render = function() {
           _vm._v(" "),
           _c("th", [_vm._v("\n                Completed Date\n            ")]),
           _vm._v(" "),
-          _c("th", [_vm._v("\n                Working Time\n            ")])
+          _c("th", [_vm._v("\n                Time\n            ")]),
+          _vm._v(" "),
+          _c("th", [_vm._v("\n                Status\n            ")])
         ])
       ]),
       _vm._v(" "),
@@ -38900,6 +38997,12 @@ var render = function() {
             _c("td", [_vm._v(_vm._s(subtask.completed_date))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(subtask.working_time))]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                _vm._s(subtask.completed == 1 ? "Completed" : "Imcomplete")
+              )
+            ]),
             _vm._v(" "),
             _c("td", { staticClass: "project-actions text-right" }, [
               _c(
@@ -38989,6 +39092,56 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
+                  _vm.message
+                    ? _c("div", { staticClass: "alert alert-success" }, [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(_vm.message) +
+                            "\n                "
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.is_editing
+                    ? _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-primary btn-xs float-right",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.makeCompleted(_vm.task)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Make Completed\n                "
+                          )
+                        ]
+                      )
+                    : _vm.completed == 1
+                    ? _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-success btn-xs float-right",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.makeCompleted(_vm.task)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Completed\n                "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
                     _vm._v(" "),
@@ -39552,6 +39705,54 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("Milestone")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.milestone,
+                        expression: "milestone"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.milestone = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  _vm._l(_vm.milestones, function(milestone) {
+                    return _c(
+                      "option",
+                      { key: milestone.id, domProps: { value: milestone.id } },
+                      [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(milestone.name) +
+                            "\n                        "
+                        )
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
                 _c("input", {
                   staticClass: "btn btn-default",
                   attrs: { type: "submit", value: "Create Task" },
@@ -39668,6 +39869,68 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "form-group" }, [
+                              _c("label", { attrs: { for: "" } }, [
+                                _vm._v("Milestone")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.milestone,
+                                      expression: "milestone"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.milestone = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    }
+                                  }
+                                },
+                                _vm._l(_vm.milestones, function(milestone) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: milestone.id,
+                                      domProps: {
+                                        value: milestone.id,
+                                        selected:
+                                          task.milestone_id == milestone.id
+                                            ? true
+                                            : false
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                                " +
+                                          _vm._s(milestone.name) +
+                                          "\n                                            "
+                                      )
+                                    ]
+                                  )
+                                }),
+                                0
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group" }, [
                               _c("input", {
                                 staticClass: "btn btn-danger",
                                 attrs: { type: "submit", value: "Cansel" },
@@ -39693,7 +39956,40 @@ var render = function() {
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(task.name))]),
                           _vm._v(" "),
-                          _vm._m(3, true),
+                          _c("td", { staticClass: "project_progress" }, [
+                            _c("div", { staticClass: "progress progress-sm" }, [
+                              _c("div", {
+                                staticClass: "progress-bar bg-green",
+                                style: "width:" + task.progress + "%;",
+                                attrs: {
+                                  role: "progressbar",
+                                  "aria-volumenow": "57",
+                                  "aria-volumemin": "0",
+                                  "aria-volumemax": "100"
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "small",
+                              [
+                                task.total_tasks != 0
+                                  ? [
+                                      _vm._v(
+                                        "\n                                            " +
+                                          _vm._s(task.progress) +
+                                          "% Complete\n                                        "
+                                      )
+                                    ]
+                                  : [
+                                      _vm._v(
+                                        "\n                                            No subtasks available\n                                        "
+                                      )
+                                    ]
+                              ],
+                              2
+                            )
+                          ]),
                           _vm._v(" "),
                           _c(
                             "td",
@@ -39831,14 +40127,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("td", [
       _c("i", { staticClass: "fa fa-tasks", attrs: { "aria-hidden": "true" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("span", { staticClass: "badge bg-danger" }, [_vm._v("55%")])
     ])
   }
 ]

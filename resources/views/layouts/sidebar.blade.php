@@ -11,9 +11,9 @@
       <!-- Sidebar user panel (optional) -->
       @if(auth()->user()->hasActiveTeam())
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
+          {{-- <div class="image">
             <img src="{{ asset( 'images/user2-160x160.jpg' ) }}" class="img-circle elevation-2" alt="User Image">
-          </div>
+          </div> --}}
           <div class="info">
             <a href="#" class="d-block">{{ active_team()->name }}</a>
           </div>

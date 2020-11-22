@@ -18,9 +18,21 @@ class ProfileController extends Controller
     public function index(Team $team, User $user)
     {
         $this->authorize('viewAny', [$user, $team]);
-        $tab = request()->query('tab') ? request()->query('tab') : 'activity' ;
+        $tab = request()->query('tab') ? request()->query('tab') : 'tasks' ;
+        $action = request()->query('action') ? request()->query('action') : '' ;
         $roles = active_team()->roles;
-        return view('users.profile', compact('user', 'roles', 'tab'));
+
+        $start_date = \Carbon\Carbon::now()->startofMonth()->toDateString();
+        $end_date = \Carbon\Carbon::now()->endofMonth()->toDateString();
+
+
+        if ($action == 'search') {
+            $start_date = request()->query('start_date');
+            $end_date = request()->query('end_date');
+        }
+
+        $tasks = $user->completedTask($start_date, $end_date);
+        return view('users.profile', compact('user', 'roles', 'tab', 'tasks'));
     }
 
     /**

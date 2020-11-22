@@ -51,6 +51,7 @@ Route::group(['prefix' => 'team', 'middleware' => 'auth'], function () {
     Route::resource('/{team}/projects/{project}/tasks', 'TaskController');
 
     // Subtask
+    Route::get('/{task}/subtasks/{subtask}/completed', 'SubTaskController@completed' );
     Route::resource('/{task}/subtasks', 'SubTaskController');
 
     // Notices

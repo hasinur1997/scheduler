@@ -47,6 +47,19 @@
                             <strong>{{ errors.description[0] }}</strong>
                         </span>
                     </div>
+
+                    <div class="form-group">
+                        <label for="">Milestone</label>
+                        <select v-model="milestone" class="form-control">
+                            <option 
+                                :value="milestone.id" 
+                                v-for="milestone in milestones" 
+                                :key="milestone.id"
+                            >
+                                {{ milestone.name }}
+                            </option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <input type="submit" value="Create Task" class="btn btn-default" @click="addTask">
                     </div>
@@ -95,6 +108,19 @@
                                             </span>
                                         </div>
                                         <div class="form-group">
+                                            <label for="">Milestone</label>
+                                            <select v-model="milestone" class="form-control">
+                                                <option 
+                                                    :value="milestone.id" 
+                                                    v-for="milestone in milestones" 
+                                                    :key="milestone.id"
+                                                    :selected="task.milestone_id == milestone.id ? true : false"
+                                                >
+                                                    {{ milestone.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <input type="submit" value="Cansel" class="btn btn-danger" @click="taskEditing = false">
                                             <input type="submit" value="Save" class="btn btn-info" @click="updateTask">
                                         </div>    
@@ -106,7 +132,32 @@
                                 <tr :key="task.id">
                                     <td><i class="fa fa-tasks" aria-hidden="true"></i></td>
                                     <td>{{ task.name }}</td>
-                                    <td><span class="badge bg-danger">55%</span></td>
+                                    <td 
+                                        class="project_progress"
+                                    >
+                                        <div 
+                                            class="progress progress-sm"
+                                        >
+                                            <div 
+                                                role="progressbar" 
+                                                aria-volumenow="57" 
+                                                aria-volumemin="0" 
+                                                aria-volumemax="100" 
+                                                class="progress-bar bg-green" 
+                                                :style="'width:' + task.progress + '%;'"
+                                            >
+                                            </div>
+                                        </div> 
+                                        <small>
+                                            <template v-if="task.total_tasks != 0">
+                                                {{ task.progress }}% Complete
+                                            </template>
+
+                                            <template v-else>
+                                                No subtasks available
+                                            </template>
+                                        </small>
+                                    </td>
                                     <td class="project-actions text-right">
                                         <a 
                                             class="btn btn-tool" 
@@ -159,7 +210,7 @@
 
 <script>
     export default {
-        props:['team_id', 'project_id', 'users'],
+        props:['team_id', 'project_id', 'users', 'milestones'],
      
         data() {
             return {
@@ -174,6 +225,7 @@
                 message: '',
                 taskOpen: false,
                 taskEditing: false,
+                milestone: '',
             }
         },
 
@@ -183,7 +235,8 @@
                 let self = this;
                 let task = {
                     name: this.name,
-                    description: this.description
+                    description: this.description,
+                    milestone: this.milestone,
                 }
 
                 axios.post(`/team/${self.team_id}/projects/${self.project_id}/tasks`, task )
@@ -203,7 +256,8 @@
             updateTask() {
                 let task = {
                     name: this.name,
-                    description: this.description
+                    description: this.description,
+                    milestone: this.milestone,
                 }
 
                 axios.put(`/team/${this.team_id}/projects/${this.project_id}/tasks/${this.task_id}`, task )
@@ -218,6 +272,7 @@
                             if (task.id == this.task_id) {
                                 task.name = this.name
                                 task.description = this.description
+                                task.milestone_id = this.milestone
                             }
 
                             return task
@@ -267,6 +322,7 @@
                 this.name = task.name
                 this.description = task.description
                 this.createTask = false
+                this.milestone = task.milestone_id
             },
 
             deleteTask(task) {

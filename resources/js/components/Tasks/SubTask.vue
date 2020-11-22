@@ -29,7 +29,10 @@
                     Completed Date
                 </th>
                 <th>
-                    Working Time
+                    Time
+                </th>
+                <th>
+                    Status
                 </th>
             </tr>
             </thead>
@@ -42,6 +45,7 @@
                 <td>{{ subtask.end_date }}</td>
                 <td>{{ subtask.completed_date }}</td>
                 <td>{{ subtask.working_time }}</td>
+                <td>{{ subtask.completed == 1 ? 'Completed' : 'Imcomplete' }}</td>
                 <td class="project-actions text-right">
                     <a 
                         href="" 
@@ -88,6 +92,26 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="alert alert-success" v-if="message">
+                        {{ message }}
+                    </div>
+                    <a 
+                        v-if="is_editing"
+                        href="#" 
+                        class="btn btn-primary btn-xs float-right"
+                        @click.prevent="makeCompleted(task)"
+                    >
+                        Make Completed
+                    </a>
+
+                    <a 
+                        v-else-if="completed == 1"
+                        href="#" 
+                        class="btn btn-success btn-xs float-right"
+                        @click.prevent="makeCompleted(task)"
+                    >
+                        Completed
+                    </a>
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input 
@@ -216,9 +240,11 @@ export default {
             selectUser: [],
             is_modal_open: false,
             subtask_id: '',
+            completed: 0,
             is_editing: false,
             showModal: false,
             dismissModal: '',
+            message: '',
         }
     },
 
@@ -240,6 +266,7 @@ export default {
                     this.is_modal_open = false
                     this.errors = []
                     this.showModal = false
+                    this.message = 'Sub task created successfully'
                 })
                 .catch(error => {
                     this.errors = error.response.data.errors
@@ -276,6 +303,8 @@ export default {
 
                         return subTask
                     } )
+
+                    this.message = 'Sub task updated successfully'
                 })
                 .catch(error => {
                     this.errors = error.response.data.errors
@@ -294,6 +323,8 @@ export default {
             this.selectUser = subTask.user_id
             this.is_modal_open = true
             this.is_editing = true
+            this.message = ''
+            this.completed = task.completed
         },
         
         deleteSubTask(subTask) { 
@@ -317,6 +348,18 @@ export default {
             this.subtask_id = ''
             this.is_modal_open = true
             this.showModal = true
+            this.message = ''
+        },
+
+        makeCompleted(task) {
+            console.log(task);
+            axios.get(`/team/${this.task.id}/subtasks/${this.subtask_id}/completed`)
+                .then(result => {
+                    console.log(result)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         }
 
     },

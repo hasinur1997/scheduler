@@ -19,6 +19,7 @@
 
 @section('content')
     <div class="row">
+        @if(active_team())
         <div class="col-12 col-sm-6 col-md-3">
         {{-- {{ make_url(['team', 1, 'asdhfklahskdlfhklahsdklfha;lskdfh;asdfkasldhf;', 'hasinurrahman3@gmail.com']) }} --}}
             <div class="info-box">
@@ -27,7 +28,7 @@
             <div class="info-box-content">
                 <span class="info-box-text">Projects</span>
                 <span class="info-box-number">
-                10
+                {{-- {{ active_team()->projects()->count() }} --}}
                 <small></small>
                 </span>
             </div>
@@ -42,7 +43,7 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Tasks</span>
-                <span class="info-box-number">41,410</span>
+                {{-- <span class="info-box-number">{{ active_team()->tasks()->count() }}</span> --}}
             </div>
             <!-- /.info-box-content -->
             </div>
@@ -52,32 +53,34 @@
 
             <!-- fix for small devices only -->
             <div class="clearfix hidden-md-up"></div>
-
+            
             <div class="col-12 col-sm-6 col-md-3">
                 <div class="info-box mb-3">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">Milestones</span>
-                    <span class="info-box-number">760</span>
+                    {{-- <span class="info-box-number">{{ active_team()->milestones()->count() }}</span> --}}
                 </div>
                 <!-- /.info-box-content -->
                 </div>
                 <!-- /.info-box -->
             </div>
             <!-- /.col -->
+
             <div class="col-12 col-sm-6 col-md-3">
                 <div class="info-box mb-3">
                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-
+                
                 <div class="info-box-content">
                     <span class="info-box-text">Members</span>
-                    <span class="info-box-number">2,000</span>
+                    <span class="info-box-number">{{ active_team()->users()->count() }}</span>
                 </div>
                 <!-- /.info-box-content -->
                 </div>
                 <!-- /.info-box -->
             </div>
+            @endif
             <!-- /.col -->
             </div>
             <!-- /.row -->

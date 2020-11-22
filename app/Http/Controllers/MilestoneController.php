@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Milestones;
+use App\Milestone;
 use App\Project;
 use App\Team;
 use Illuminate\Http\Request;
@@ -49,7 +49,7 @@ class MilestoneController extends Controller
             'end_date'  =>  $request->due_date
         ]);
 
-        return redirect()->back();
+        return redirect('/team/'. $team->id .'/projects/'.$project->id.'?tab=milestones');
     }
 
     /**
@@ -58,7 +58,7 @@ class MilestoneController extends Controller
      * @param  \App\Milestones  $milestones
      * @return \Illuminate\Http\Response
      */
-    public function show(Milestones $milestones)
+    public function show(Milestone $milestones)
     {
         //
     }
@@ -69,7 +69,7 @@ class MilestoneController extends Controller
      * @param  \App\Milestones  $milestones
      * @return \Illuminate\Http\Response
      */
-    public function edit(Milestones $milestones)
+    public function edit(Milestone $milestones)
     {
         //
     }
@@ -81,9 +81,21 @@ class MilestoneController extends Controller
      * @param  \App\Milestones  $milestones
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Milestones $milestones)
+    public function update(Request $request, Team $team, Project $project, Milestone $milestone)
     {
-        //
+        $this->validate($request, [
+            'name'  => 'required',
+            'due_date' => 'required',
+            'description' =>    'required'
+        ]);
+
+        $milestone->update([
+            'name' =>    $request->name,
+            'description'   =>   $request->description,
+            'end_date'  =>  $request->due_date
+        ]);
+
+        return redirect('/team/'. $team->id .'/projects/'.$project->id.'?tab=milestones');
     }
 
     /**
