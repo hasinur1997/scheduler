@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Team;
+use App\Project;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class TeamPolicy
+class ProjectPolicy
 {
     use HandlesAuthorization;
 
@@ -25,13 +25,13 @@ class TeamPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Team  $team
+     * @param  \App\Project  $project
      * @return mixed
      */
-    public function view(User $user, Team $team)
+    public function view(User $user, Project $project)
     {
-        //
-    }
+        return $project->created_by === $user->id || $project->users->contains($user) || $user->hasPermission('manage_project', active_team()->id);
+    }   
 
     /**
      * Determine whether the user can create models.
@@ -48,10 +48,10 @@ class TeamPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Team  $team
+     * @param  \App\Project  $project
      * @return mixed
      */
-    public function update(User $user, Team $team)
+    public function update(User $user, Project $project)
     {
         //
     }
@@ -60,10 +60,10 @@ class TeamPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Team  $team
+     * @param  \App\Project  $project
      * @return mixed
      */
-    public function delete(User $user, Team $team)
+    public function delete(User $user, Project $project)
     {
         //
     }
@@ -72,10 +72,10 @@ class TeamPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Team  $team
+     * @param  \App\Project  $project
      * @return mixed
      */
-    public function restore(User $user, Team $team)
+    public function restore(User $user, Project $project)
     {
         //
     }
@@ -84,23 +84,11 @@ class TeamPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Team  $team
+     * @param  \App\Project  $project
      * @return mixed
      */
-    public function forceDelete(User $user, Team $team)
+    public function forceDelete(User $user, Project $project)
     {
         //
-    }
-
-    /**
-     * Determine whether the user can manage team
-     *
-     * @param User $user
-     * @param Team $team
-     * @return bool
-     */
-    public function manage(User $user, Team $team)
-    {
-        return $user->id === $team->created_by || $user->hasPermission('edit', $team->id);
     }
 }

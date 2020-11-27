@@ -57,7 +57,7 @@ class RoleController extends Controller
         ]);
         
         if ( $request->abilities ) {
-            $role->abilities()->attach($request->abilities);
+            $role->abilities()->attach($request->abilities, ['team_id' => active_team()->id]);
         }
 
         return redirect()->back();
@@ -69,7 +69,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Role $role)
     {
         //
     }
@@ -111,9 +111,11 @@ class RoleController extends Controller
         ]);
         
 
-
         if ( $request->abilities ) {
-            $role->abilities()->sync($request->abilities);
+            $abilities = array_fill_keys($request->abilities, ['team_id' => active_team()->id]);
+            $role->abilities()
+                ->wherePivot('team_id', active_team()->id)
+                ->sync($abilities);
         }
 
         return redirect()->back();
@@ -125,8 +127,10 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        //
+        $role->delete();
+
+        return redirect()->back();
     }
 }

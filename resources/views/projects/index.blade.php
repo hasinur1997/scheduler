@@ -50,70 +50,72 @@
                 </thead>
                 <tbody>
                     @foreach($projects as $project)
-                        <tr>
-                            <td>
-                                #
-                            </td>
-                            <td>
-                                <a href="{{ url('/team/' . active_team()->id . '/projects/' . $project->id) }}">
-                                    {{ $project->name }}
-                                </a>
-                                <br/>
-                                <small>
-                                    Created {{ $project->created_at->diffForHumans() }}
-                                </small>
-                            </td>
-                            <td>
-                                <ul class="list-inline">
-                                    @foreach($project->users as $user)
-                                        <li class="list-inline-item">
-                                            <img alt="Avatar" class="table-avatar" src="{{ asset('/images/avatar.png') }}">
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </td>
-                            <td class="project_progress">
-                                <div class="progress progress-sm">
-                                    <div class="progress-bar bg-green" role="progressbar" aria-volumenow="57" aria-volumemin="0" aria-volumemax="100" style="width: {{$project->progress}}%">
-                                        
+                        @can('view', $project)
+                            <tr>
+                                <td>
+                                    #
+                                </td>
+                                <td>
+                                    <a href="{{ url('/team/' . active_team()->id . '/projects/' . $project->id) }}">
+                                        {{ $project->name }}
+                                    </a>
+                                    <br/>
+                                    <small>
+                                        Created {{ $project->created_at->diffForHumans() }}
+                                    </small>
+                                </td>
+                                <td>
+                                    <ul class="list-inline">
+                                        @foreach($project->users as $user)
+                                            <li class="list-inline-item">
+                                                <img alt="Avatar" class="table-avatar" src="{{ asset('/images/avatar.png') }}">
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                                <td class="project_progress">
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-green" role="progressbar" aria-volumenow="57" aria-volumemin="0" aria-volumemax="100" style="width: {{$project->progress}}%">
+                                            
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <small>
-                                    @if($project->tasks()->count() != 0)
-                                        {{$project->progress}}% Complete
-                                    @else
-                                        No tasks available
-                                    @endif
-                                </small>
-                            </td>
-                            <td class="project-state">
-                                <span class="badge badge-success">Success</span>
-                            </td>
-                            <td class="project-actions text-right">
-                                <a 
-                                    class="btn btn-primary btn-xs" 
-                                    href="{{ url('/team/' . active_team()->id . '/projects/' . $project->id) }}"
-                                >
-                                    <i class="fas fa-folder">
-                                    </i>
-                                    View
-                                </a>
-                                <a 
-                                    class="btn btn-info btn-xs" 
-                                    href="{{ url('/team/' . active_team()->id . '/projects/' . $project->id . '/edit') }}"
-                                >
-                                    <i class="fas fa-pencil-alt">
-                                    </i>
-                                    Edit
-                                </a>
-                                <a class="btn btn-danger btn-xs" href="#">
-                                    <i class="fas fa-trash">
-                                    </i>
-                                    Delete
-                                </a>
-                            </td>
-                        </tr>
+                                    
+                                    <small>
+                                        @if($project->tasks()->count() != 0)
+                                            {{$project->progress}}% Complete
+                                        @else
+                                            No tasks available
+                                        @endif
+                                    </small>
+                                </td>
+                                <td class="project-state">
+                                    <span class="badge badge-success">Success</span>
+                                </td>
+                                <td class="project-actions text-right">
+                                    <a 
+                                        class="btn btn-primary btn-xs" 
+                                        href="{{ url('/team/' . active_team()->id . '/projects/' . $project->id) }}"
+                                    >
+                                        <i class="fas fa-folder">
+                                        </i>
+                                        View
+                                    </a>
+                                    <a 
+                                        class="btn btn-info btn-xs" 
+                                        href="{{ url('/team/' . active_team()->id . '/projects/' . $project->id . '/edit') }}"
+                                    >
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-danger btn-xs" href="#">
+                                        <i class="fas fa-trash">
+                                        </i>
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        @endcan
                     @endforeach
                 </tbody>
             </table>

@@ -14,8 +14,12 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(Team $team)
+    {  
+        if ($team->id != active_team()->id) {
+            abort(401);
+        }
+        // $this->authorize('viewAny', Project::class);
         $projects = active_team()->projects()->paginate(20);
 
         return view('projects.index', compact('projects'));

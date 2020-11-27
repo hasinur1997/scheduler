@@ -113,11 +113,11 @@ class User extends Authenticatable
      * @param string $permission
      * @return boolean
      */
-    public function hasPermission($permission)
+    public function hasPermission($permission, $team_id)
     {
-        $abilities = $this->activeTeamRoleAbilities();
-
-        return $abilities ? $abilities->contains('name', '=', $permission) : false;
+        return $this->roles()->wherePivot('team_id', $team_id)->get()->load(['abilities' => function($query) use($team_id)  {
+            $query->wherePivot('team_id', $team_id);
+        }])->pluck('abilities')->collapse()->pluck('slug')->contains($permission);
     }
 
     /**

@@ -124,6 +124,10 @@ class TeamController extends Controller
      */
     public function users(Team $team)
     {
+        if (active_team()->id != $team->id) {
+            abort(401);
+        } 
+
         $users = $team->users()->paginate(20);
 
         return view('teams.users', compact('users'));
@@ -137,6 +141,9 @@ class TeamController extends Controller
      */
     public function getMembers(Team $team)
     {
+        if (active_team()->id != $team->id) {
+            return response('Unauthorized.', 401);
+        } 
         return $team->users;
     }
 }
