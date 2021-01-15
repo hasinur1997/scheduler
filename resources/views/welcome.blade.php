@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -90,4 +90,61 @@
             </div>
         </div>
     </body>
-</html>
+</html> --}}
+
+
+@extends('layouts.master')
+
+@section('main')
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url('/') }}">Scheduler</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                {{-- <li class="nav-item">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Register</a>
+                </li> --}}
+
+                    @if (Route::has('login'))
+                        @auth
+                            <li class="nav-item">
+                                <a href="{{ url('/home') }}" class="nav-link">Home</a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a href="{{ route('login') }}" class="nav-link">Login</a>
+                            </li>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a href="{{ route('register') }}" class="nav-link">Register</a>
+                                </li>
+                            @endif
+                        @endauth
+                        
+                    @endif
+            </ul>
+        </div>
+  </div>
+</nav>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6" style="padding-top: 170px">
+            <h2>Scheduler helps teams work more collaboratively and get more done.</h2>
+            <p>Scheduler’s enable teams to organize and prioritize projects in a fun, flexible, and rewarding way.</p>
+        </div>
+        <div class="col-md-6" style="padding-top: 50px">
+            <img src="{{ asset('images/software-teams.svg') }}" style="width: 100%; margin-left: 90px" alt="">
+        </div>
+    </div>
+</div>
+
+@endsection
