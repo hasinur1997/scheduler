@@ -1,6 +1,6 @@
 ## Installation
 
-### Before database migration please edit .env file and set database credemtials
+### Before database migration please edit .env file and set database credentials
 
 ```
 1.Run `git clone 'link projer github'
