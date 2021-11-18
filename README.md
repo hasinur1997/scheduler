@@ -21,3 +21,9 @@
 Run `npm install`
 
 Run `npm run dev`
+
+
+## For Env
+DB_DATABASE=`your database name`
+DB_USERNAME=`your database username`
+DB_PASSWORD=`your database password`
