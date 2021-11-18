@@ -27,7 +27,7 @@ window.bus = new Vue();
 // Vue.component('create-role', require('./components/Roles/Create.vue').default);
 // Vue.component('role-list', require('./components/Roles/List.vue').default);
 
-Vue.component('tasks', require('./components/tasks/Task.vue').default);
+Vue.component('tasks', require('./components/Tasks/Task.vue').default);
 Vue.component('subtasks', require('./components/Tasks/SubTask.vue').default);
 Vue.component('users', require('./components/Users/Users.vue').default);
 /**
