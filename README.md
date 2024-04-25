@@ -1,3 +1,5 @@
+# A project management tools develop with laravel and vue
+
 ## Installation
 
 ### Before database migration please edit .env file and set database credentials
