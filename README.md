@@ -1,4 +1,5 @@
-# A project management tools develop with laravel and vue
+# Scheduler - A project management tools
+
 
 ## Installation
 
