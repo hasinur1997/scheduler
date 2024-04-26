@@ -1,5 +1,7 @@
 # Scheduler - A project management tools
 
+## Description
+Scheduler is a project management tool, that helps to track the project and task progress.
 
 ## Installation
 
